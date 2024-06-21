@@ -52,7 +52,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
         url: `/uploads/${req.file.originalname}`,
     });
 })
-
+// зачем нам два тэга
 app.get('/tags', PostController.getLastTags);
 
 app.get('/posts', PostController.getAll);
