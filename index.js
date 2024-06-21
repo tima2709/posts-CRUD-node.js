@@ -10,7 +10,7 @@ import cors from 'cors';
 
 // Между .net/"blog" mongoDB сам догнал и содзал базу данных
 
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("DB ok"))
     .catch((err) => console.log('DB error', err))
 
