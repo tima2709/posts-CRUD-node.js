@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose'
-import {registerValidation, loginValidation, postCreateValidation} from './validations.js' // нужно импортировать с расгирением
+import {loginValidation, postCreateValidation, registerValidation} from './validations.js' // нужно импортировать с расгирением
 import checkAuth from './utils/checkAuth.js';
 import {getMe, login, register} from "./controllers/UserController.js";
 import * as  PostController from './controllers/PostController.js'
@@ -10,7 +10,7 @@ import cors from 'cors';
 
 // Между .net/"blog" mongoDB сам догнал и содзал базу данных
 
-mongoose.connect('mongodb+srv://tmrln2709:qwerty123@cluster0.1yyct13.mongodb.net/blog')
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log("DB ok"))
     .catch((err) => console.log('DB error', err))
 
@@ -64,7 +64,7 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         return console.log(err)
     }
