@@ -11,13 +11,7 @@ import cors from 'cors';
 
 // Между .net/"blog" mongoDB сам догнал и содзал базу данных
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://tmrln2709:qwerty123@cluster0.1yyct13.mongodb.net/blog', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS:  5000,
-    socketTimeoutMS: 45000,
-    connectTimeoutMS: 10000
-})
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://tmrln2709:qwerty123@cluster0.1yyct13.mongodb.net/blog')
     .then(() => console.log("DB ok"))
     .catch((err) => console.log('DB error', err))
 
