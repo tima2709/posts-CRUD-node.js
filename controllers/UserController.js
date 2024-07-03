@@ -2,7 +2,7 @@ import UserModel from "../models/User.js";
 // jsonwebtoken для токенов
 import jwt from 'jsonwebtoken';
 // bcrypt для шифрования пароля password
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 // nodemon библиотека которая обновляет сервер при изменении данных таким образом нам не надо отключать сервер (ctrl c) и обратно запускать
 
 export const register = async (req, res) => {
