@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon index.js"
+    "start:dev": "nodemon index.js",
+    "postinstall": "npm rebuild bcrypt --build-from-source"
   },
   "author": "",
   "license": "ISC",
