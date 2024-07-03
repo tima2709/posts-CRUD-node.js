@@ -1,5 +1,5 @@
 import express from 'express';
-import fs from 'fs'
+import fs from 'fs';
 import multer from 'multer';
 import mongoose from 'mongoose'
 import {loginValidation, postCreateValidation, registerValidation} from './validations.js' // нужно импортировать с расгирением
@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://tmrln2709:qwerty123@c
 
 const app = express()
 
-// создаем хранилище где будем сохранять все наши еартинки
+// создаем хранилище где будем сохранять все наши картинки
 const storage = multer.diskStorage({
     // ожидает какието параметры, запрос, файл, callback
     destination: (_, __, cb) => {
@@ -51,11 +51,26 @@ app.post('/auth/register', registerValidation, handleValidationErrors, register)
 app.get('/auth/me', checkAuth, getMe)
 
 // upload image
+// app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+//     res.json({
+//         url: `/uploads/${req.file.originalname}`,
+//     });
+// })
+
+// код от chatGPT
+
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            message: 'File not uploaded'
+        });
+    }
+
     res.json({
         url: `/uploads/${req.file.originalname}`,
     });
-})
+});
+
 // зачем нам два тэга
 app.get('/tags', PostController.getLastTags);
 
