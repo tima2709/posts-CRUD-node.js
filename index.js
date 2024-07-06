@@ -9,6 +9,7 @@ import * as  PostController from './controllers/PostController.js'
 import * as CommentsController from './controllers/CommentsController.js';
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 import cors from 'cors';
+import {getCommentsById} from "./controllers/CommentsController.js";
 
 // Между .net/"blog" mongoDB сам догнал и содзал базу данных
 
@@ -84,7 +85,9 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 
+app.get('/comments', CommentsController.getCommentsById)
 app.post('/comments', checkAuth, commentCreateValidation, CommentsController.createComments);
+app.delete('/comments/:id', checkAuth, CommentsController.remove)
 
 app.listen(process.env.PORT || 4444, (err) => {
     if (err) {

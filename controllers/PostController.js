@@ -45,7 +45,7 @@ export const getOne = async (req, res) => {
                 path: 'comments', // Заполняем комментарии
                 populate: {
                     path: 'user', // Заполняем пользователя внутри комментариев
-                    select: 'fullName email' // Выбираем поля пользователя
+                    select: 'fullName avatarUrl' // Выбираем поля пользователя
                 }
             })
 
@@ -88,7 +88,7 @@ export const remove = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({
-            message: 'Не удалось вернуть статью'
+            message: 'Не удалось удалить статью'
         });
     }
 };
