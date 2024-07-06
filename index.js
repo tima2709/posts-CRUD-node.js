@@ -2,10 +2,11 @@ import express from 'express';
 import fs from 'fs';
 import multer from 'multer';
 import mongoose from 'mongoose'
-import {loginValidation, postCreateValidation, registerValidation} from './validations.js' // нужно импортировать с расгирением
+import {commentCreateValidation, loginValidation, postCreateValidation, registerValidation} from './validations.js' // нужно импортировать с расгирением
 import checkAuth from './utils/checkAuth.js';
 import {getMe, login, register} from "./controllers/UserController.js";
 import * as  PostController from './controllers/PostController.js'
+import * as CommentsController from './controllers/CommentsController.js';
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 import cors from 'cors';
 
@@ -82,6 +83,8 @@ app.get('/posts/:id', PostController.getOne);
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
+
+app.post('/comments', checkAuth, commentCreateValidation, CommentsController.createComments);
 
 app.listen(process.env.PORT || 4444, (err) => {
     if (err) {

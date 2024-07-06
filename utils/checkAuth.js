@@ -20,6 +20,4 @@ export default (req, res, next) => {
            message: 'Нет доступа',
         })
     }
-
-
 }

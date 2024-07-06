@@ -1,6 +1,6 @@
 import PostModel from '../models/Post.js';
 
-export const getLastTags = async (req,res) => {
+export const getLastTags = async (req, res) => {
     try {
         const posts = await PostModel.find().limit(5).exec();
 
@@ -41,6 +41,14 @@ export const getOne = async (req, res) => {
             {$inc: {viewsCount: 1}},
             {returnDocument: 'after'}
         ).populate('user')
+            .populate({
+                path: 'comments', // Заполняем комментарии
+                populate: {
+                    path: 'user', // Заполняем пользователя внутри комментариев
+                    select: 'fullName email' // Выбираем поля пользователя
+                }
+            })
+
 
         if (!doc) {
             return res.status(404).json({
@@ -91,7 +99,7 @@ export const create = async (req, res) => {
             title: req.body.title,
             text: req.body.text,
             imageUrl: req.body.imageUrl,
-            tags: req.body?.tags,
+            tags: req.body?.tags.split(','),
             user: req.userId,
         });
 

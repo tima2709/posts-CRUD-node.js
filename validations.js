@@ -19,3 +19,8 @@ export const postCreateValidation = [
     body('tags', 'Неверный формат тэгов (укажите массив)').optional().isString(),
     body('imageUrl', 'Неверная ссылка на изоброжение').optional().isString(),
 ]
+
+export const commentCreateValidation = [
+    body('title','Title is required').notEmpty().isLength({max: 1000}).isString(),
+    body('postId', 'Post ID is required').notEmpty().isMongoId(),
+]
