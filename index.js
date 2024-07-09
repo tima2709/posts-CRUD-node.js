@@ -86,6 +86,7 @@ app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 
 app.get('/comments', CommentsController.getCommentsById)
+app.get('/lastComments', CommentsController.getLastComments)
 app.post('/comments', checkAuth, commentCreateValidation, CommentsController.createComments);
 app.delete('/comments/:id', checkAuth, CommentsController.remove)
 

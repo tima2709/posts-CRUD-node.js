@@ -8,6 +8,7 @@ export const getLastTags = async (req, res) => {
             .map((obj) => obj.tags)
             .flat()
             .slice(0, 5)
+            .reverse()
 
         res.json(tags)
     } catch (err) {
@@ -35,17 +36,16 @@ export const getOne = async (req, res) => {
     try {
         const postId = req.params.id;
 
-        // Use async/await and promises instead of callbacks
         const doc = await PostModel.findOneAndUpdate(
             {_id: postId},
             {$inc: {viewsCount: 1}},
             {returnDocument: 'after'}
         ).populate('user')
             .populate({
-                path: 'comments', // Заполняем комментарии
+                path: 'comments',
                 populate: {
-                    path: 'user', // Заполняем пользователя внутри комментариев
-                    select: 'fullName avatarUrl' // Выбираем поля пользователя
+                    path: 'user',
+                    select: 'fullName avatarUrl'
                 }
             })
 

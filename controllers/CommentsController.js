@@ -1,11 +1,32 @@
 import CommentsModel from "../models/Comments.js";
 import PostModel from "../models/Post.js";
 
+export const getLastComments = async (req, res) => {
+    try {
+        const postComments = await CommentsModel.find().populate({
+            path: 'user',
+            select: 'fullName avatarUrl'
+        }).exec();
+
+        const comments = postComments
+            .flat()
+            .slice(0, 5)
+            .reverse()
+
+        console.log(comments, 'comm')
+
+        res.json(comments)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Не удалось получить комментарии'
+        })
+    }
+}
+
 export const getCommentsById = async (req, res) => {
     try {
         const { postId } = req.query; // Получаем postId из query parameters
-
-        console.log(postId, 'post id');
 
         const doc = await CommentsModel.find({ post: postId })
             .populate({
@@ -13,8 +34,6 @@ export const getCommentsById = async (req, res) => {
                     select: 'fullName avatarUrl' // Выбираем поля пользователя
                 })
             .exec();
-
-        console.log(doc, 'comments');
 
         res.json(doc);
     } catch (err) {
